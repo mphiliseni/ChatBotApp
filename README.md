@@ -14,8 +14,7 @@ Features
     HTML/CSS and JavaScript
     Bootstrap for styling
 
-
-    ![ChatBot](https://github.com/user-attachments/assets/eb20e0fe-a13a-4693-b8e6-e0d5bd54fa5f)
+   ![ChatBot](https://github.com/user-attachments/assets/eb20e0fe-a13a-4693-b8e6-e0d5bd54fa5f)
 
 
 # To integrate Azure OpenAI with your chatbot in the ChatBotApp project, you'll need to use Azure OpenAI's API to handle the conversation responses.
