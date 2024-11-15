@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ChatBotApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ChatBotApp.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ChatBotApp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+            <!-- Chatbot button and popup -->
+            <div id="chatbot-container" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
+                <button id="chatbot-button" style="background-color: #007bff; color: white; border-radius: 50%; padding: 15px; border: none; cursor: pointer;">
+                    💬
+                </button>
+                <div id="chatbot-popup" style="display: none; background-color: white; width: 300px; height: 400px; border: 1px solid #007bff; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+                    <div id="chatbot-header" style="background-color: #007bff; color: white; padding: 10px; border-radius: 10px 10px 0 0; text-align: center;">
+                        Chat Bot
+                    </div>
+                    <div id="chatbot-messages" style="height: 300px; overflow-y: auto; padding: 10px; background-color: #f8f9fa;"></div>
+                    <input type="text" id="chatbot-input" placeholder="Type your message..." style="width: 100%; padding: 10px; border: none; border-top: 1px solid #007bff; border-radius: 0 0 10px 10px;">
+                </div>
+            </div>
+
+            <script>
+                // Toggle the chatbot popup
+                document.getElementById('chatbot-button').addEventListener('click', function () {
+                    var popup = document.getElementById('chatbot-popup');
+                    popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+                });
+
+                // Handle chatbot input (This is just for demonstration; it will echo the message)
+                document.getElementById('chatbot-input').addEventListener('keypress', function (event) {
+                    if (event.key === 'Enter') {
+                        var input = document.getElementById('chatbot-input');
+                        var messages = document.getElementById('chatbot-messages');
+
+                        if (input.value.trim() !== '') {
+                            var message = document.createElement('div');
+                            message.textContent = input.value;
+                            message.style.padding = '5px';
+                            message.style.margin = '5px 0';
+                            message.style.backgroundColor = '#007bff';
+                            message.style.color = 'white';
+                            message.style.borderRadius = '10px';
+                            messages.appendChild(message);
+
+                            // Clear input field
+                            input.value = '';
+
+                            // Simulate bot response
+                            setTimeout(function () {
+                                var botMessage = document.createElement('div');
+                                botMessage.textContent = 'Bot response to "' + message.textContent + '"';
+                                botMessage.style.padding = '5px';
+                                botMessage.style.margin = '5px 0';
+                                botMessage.style.backgroundColor = '#f8f9fa';
+                                botMessage.style.border = '1px solid #007bff';
+                                botMessage.style.borderRadius = '10px';
+                                messages.appendChild(botMessage);
+
+                                // Scroll to bottom
+                                messages.scrollTop = messages.scrollHeight;
+                            }, 1000);
+                        }
+                    }
+                });
+            </script>
+
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - ChatBotApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('chatbot-input').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                var input = document.getElementById('chatbot-input');
+                var messages = document.getElementById('chatbot-messages');
+
+                if (input.value.trim() !== '') {
+                    var message = document.createElement('div');
+                    message.textContent = input.value;
+                    message.style.padding = '5px';
+                    message.style.margin = '5px 0';
+                    message.style.backgroundColor = '#007bff';
+                    message.style.color = 'white';
+                    message.style.borderRadius = '10px';
+                    messages.appendChild(message);
+
+                    // Send message to server
+                    fetch('/Chat/SendMessage', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value // CSRF token
+                        },
+                        body: JSON.stringify({ message: input.value })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Display bot response
+                            var botMessage = document.createElement('div');
+                            botMessage.textContent = data.response;
+                            botMessage.style.padding = '5px';
+                            botMessage.style.margin = '5px 0';
+                            botMessage.style.backgroundColor = '#f8f9fa';
+                            botMessage.style.border = '1px solid #007bff';
+                            botMessage.style.borderRadius = '10px';
+                            messages.appendChild(botMessage);
+
+                            // Scroll to bottom
+                            messages.scrollTop = messages.scrollHeight;
+                        });
+
+                    // Clear input field
+                    input.value = '';
+                }
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
