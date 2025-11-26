@@ -2,7 +2,308 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">ChatBotApp</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+        margin: -20px -15px 40px -15px;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        animation: fadeInUp 1s ease-out;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+        margin-bottom: 30px;
+        opacity: 0.9;
+        animation: fadeInUp 1s ease-out 0.2s both;
+    }
+    
+    .cta-button {
+        background: #28a745;
+        color: white;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        animation: fadeInUp 1s ease-out 0.4s both;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+    
+    .cta-button:hover {
+        background: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+    
+    .features-section {
+        padding: 60px 0;
+        background: #f8f9fa;
+        margin: 40px -15px;
+    }
+    
+    .feature-card {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        border: none;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        display: block;
+        color: #007bff;
+    }
+    
+    .stats-section {
+        padding: 60px 0;
+        background: #343a40;
+        color: white;
+        margin: 40px -15px;
+        text-align: center;
+    }
+    
+    .stat-item {
+        margin-bottom: 30px;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #28a745;
+        display: block;
+    }
+    
+    .stat-label {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+    
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 50px;
+        color: #333;
+    }
+    
+    .chat-preview {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin: 30px 0;
+    }
+    
+    .chat-header {
+        background: #007bff;
+        color: white;
+        padding: 15px 20px;
+        font-weight: 600;
+    }
+    
+    .chat-body {
+        padding: 20px;
+        min-height: 200px;
+        background: #f8f9fa;
+    }
+    
+    .chat-message {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 20px;
+        max-width: 80%;
+    }
+    
+    .user-message {
+        background: #007bff;
+        color: white;
+        margin-left: auto;
+    }
+    
+    .bot-message {
+        background: white;
+        border: 1px solid #dee2e6;
+    }
+    
+    .robot-icon-title {
+        color: #007bff;
+        margin-right: 10px;
+    }
+    
+    .cta-icon {
+        color: #666;
+        font-size: 1.2rem;
+        margin-right: 8px;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <h1 class="hero-title"><i class="fas fa-robot robot-icon-title"></i>Welcome to ChatBotApp</h1>
+        <p class="hero-subtitle">Experience the future of conversational AI with our intelligent chatbot platform</p>
+        <a href="#features" class="cta-button">Explore Features</a>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section" id="features">
+    <div class="container">
+        <h2 class="section-title">Why Choose Our ChatBot?</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h4>Lightning Fast</h4>
+                    <p>Get instant responses powered by advanced AI technology. No waiting, just immediate assistance.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-brain feature-icon"></i>
+                    <h4>Smart & Intelligent</h4>
+                    <p>Our AI understands context and provides meaningful, personalized responses to your queries.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h4>Secure & Private</h4>
+                    <p>Your conversations are protected with enterprise-grade security and privacy measures.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-clock feature-icon"></i>
+                    <h4>24/7 Available</h4>
+                    <p>Always here when you need help. Our chatbot never sleeps and is ready to assist anytime.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-bullseye feature-icon"></i>
+                    <h4>Accurate Responses</h4>
+                    <p>Trained on vast datasets to provide precise and helpful answers to your questions.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt feature-icon"></i>
+                    <h4>Multi-Platform</h4>
+                    <p>Access our chatbot from any device - desktop, tablet, or mobile. Seamless experience everywhere.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chat Preview Section -->
+<div class="container my-5">
+    <h2 class="section-title">See It In Action</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="chat-preview">
+                <div class="chat-header">
+                    <i class="fas fa-robot"></i> ChatBot Assistant
+                </div>
+                <div class="chat-body">
+                    <div class="chat-message bot-message">
+                        Hi there! I'm your AI assistant. How can I help you today?
+                    </div>
+                    <div class="chat-message user-message">
+                        Can you help me with product information?
+                    </div>
+                    <div class="chat-message bot-message">
+                        Absolutely! I'd be happy to help you with product information. What specific product are you interested in learning about?
+                    </div>
+                    <div class="chat-message user-message">
+                        Thanks! That's exactly what I needed.
+                    </div>
+                    <div class="chat-message bot-message">
+                        You're welcome! Feel free to ask me anything else. I'm here to help!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-section">
+    <div class="container">
+        <h2 class="section-title" style="color: white; margin-bottom: 40px;">Trusted by Users Worldwide</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Active Users</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">99.9%</span>
+                    <span class="stat-label">Uptime</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">1M+</span>
+                    <span class="stat-label">Messages Processed</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">4.8<i class="fas fa-star" style="color: #ffc107; font-size: 0.8em; margin-left: 5px;"></i></span>
+                    <span class="stat-label">User Rating</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="container text-center my-5">
+    <h2 class="section-title">Ready to Get Started?</h2>
+    <p class="lead mb-4">Join thousands of users who are already experiencing the power of AI conversation</p>
+    <div class="mb-4">
+        <span style="font-size: 1.1rem; color: #666;">
+            <i class="fas fa-mouse-pointer cta-icon"></i>Click the robot icon in the bottom-right corner to start chatting!
+        </span>
+    </div>
 </div>

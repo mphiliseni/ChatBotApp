@@ -1,32 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mhlon\\source\\repos\\Software Developer\\ChatBotApp\\ChatBotApp\\ChatBotApp.csproj": {}
+    "/Users/mphilisenimhlongo/Project/ChatBotApp/ChatBotApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mhlon\\source\\repos\\Software Developer\\ChatBotApp\\ChatBotApp\\ChatBotApp.csproj": {
+    "/Users/mphilisenimhlongo/Project/ChatBotApp/ChatBotApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mhlon\\source\\repos\\Software Developer\\ChatBotApp\\ChatBotApp\\ChatBotApp.csproj",
+        "projectUniqueName": "/Users/mphilisenimhlongo/Project/ChatBotApp/ChatBotApp.csproj",
         "projectName": "ChatBotApp",
-        "projectPath": "C:\\Users\\mhlon\\source\\repos\\Software Developer\\ChatBotApp\\ChatBotApp\\ChatBotApp.csproj",
-        "packagesPath": "C:\\Users\\mhlon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mhlon\\source\\repos\\Software Developer\\ChatBotApp\\ChatBotApp\\obj\\",
+        "projectPath": "/Users/mphilisenimhlongo/Project/ChatBotApp/ChatBotApp.csproj",
+        "packagesPath": "/Users/mphilisenimhlongo/.nuget/packages/",
+        "outputPath": "/Users/mphilisenimhlongo/Project/ChatBotApp/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mhlon\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/mphilisenimhlongo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,7 +38,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -86,6 +81,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.15, 8.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[8.0.15, 8.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.15, 8.0.15]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -94,7 +103,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,4 +1,104 @@
-# ChatBotApp
+# ChatBotApp with Azure OpenAI Integration
+
+A modern ASP.NET Core chatbot application with Azure OpenAI integration, featuring a beautiful animated UI and professional design.
+
+## Features
+
+✨ **Modern UI Design**
+- Professional landing page with animated elements
+- Font Awesome icons throughout the interface
+- Responsive design for all devices
+- Gradient backgrounds and smooth animations
+
+🤖 **Interactive Chatbot**
+- Animated robot icon with pulse, blinking, and antenna movement
+- Typing indicators with animated dots
+- Real-time timestamps on all messages
+- Professional chat bubbles with proper styling
+
+🧠 **AI-Powered Responses**
+- Azure OpenAI integration ready
+- Intelligent keyword-based responses in demo mode
+- Fallback responses when Azure OpenAI is not configured
+- Enhanced conversation flow
+
+## Setup Instructions
+
+### Prerequisites
+- .NET 8.0 SDK
+- Visual Studio Code or Visual Studio
+- Azure subscription (for Azure OpenAI)
+
+### 1. Clone and Run Locally
+```bash
+git clone <your-repo-url>
+cd ChatBotApp
+dotnet restore
+dotnet run
+```
+
+### 2. Configure Azure OpenAI (Optional)
+
+To enable full AI capabilities, you'll need to set up Azure OpenAI:
+
+#### Step 1: Create Azure OpenAI Resource
+1. Go to [Azure Portal](https://portal.azure.com)
+2. Create a new Azure OpenAI resource
+3. Deploy a model (e.g., GPT-3.5-turbo or GPT-4)
+4. Note your endpoint URL and API key
+
+#### Step 2: Configure Application Settings
+Update your `appsettings.json` or use User Secrets:
+
+```json
+{
+  "AzureOpenAI": {
+    "Endpoint": "https://your-resource-name.openai.azure.com/",
+    "ApiKey": "your-api-key-here",
+    "DeploymentName": "gpt-35-turbo"
+  }
+}
+```
+
+#### Using User Secrets (Recommended for Development)
+```bash
+dotnet user-secrets set "AzureOpenAI:Endpoint" "https://your-resource-name.openai.azure.com/"
+dotnet user-secrets set "AzureOpenAI:ApiKey" "your-api-key-here"
+dotnet user-secrets set "AzureOpenAI:DeploymentName" "gpt-35-turbo"
+```
+
+### 3. Demo Mode vs AI Mode
+
+**Demo Mode (Default):**
+- Works without Azure OpenAI configuration
+- Intelligent keyword-based responses
+- Enhanced conversational patterns
+- Perfect for testing and demonstrations
+
+**AI Mode (With Azure OpenAI):**
+- Full GPT-powered responses
+- Contextual understanding
+- Advanced conversation capabilities
+- Real-time AI processing
+
+## Quick Start
+
+1. **Run the application:**
+   ```bash
+   dotnet run
+   ```
+
+2. **Open your browser to:** `http://localhost:5277`
+
+3. **Click the animated robot icon** in the bottom-right corner to start chatting!
+
+4. **Test the chatbot** - it works in demo mode out of the box
+
+5. **Configure Azure OpenAI** (optional) to unlock full AI capabilities
+
+## License
+
+This project is licensed under the MIT License.
 
 ChatBotApp is a basic ASP.NET Core MVC web application that integrates a live chatbot feature on the homepage. This chatbot allows users to interact by typing messages and receiving automated responses.
 Features
