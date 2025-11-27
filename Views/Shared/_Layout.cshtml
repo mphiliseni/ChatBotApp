@@ -103,148 +103,190 @@
             </div>
 
             <script>
-                // Toggle the chatbot popup
-                document.getElementById('chatbot-button').addEventListener('click', function () {
-                    var popup = document.getElementById('chatbot-popup');
-                    popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
-                });
-
-                // Function to format time
-                function formatTime() {
-                    const now = new Date();
-                    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                }
-
-                // Function to create typing indicator
-                function showTypingIndicator() {
-                    var messages = document.getElementById('chatbot-messages');
-                    var typingDiv = document.createElement('div');
-                    typingDiv.id = 'typing-indicator';
-                    typingDiv.style.cssText = `
-                        padding: 10px 15px;
-                        margin: 5px 0;
-                        background-color: #f8f9fa;
-                        border: 1px solid #007bff;
-                        border-radius: 20px 20px 20px 5px;
-                        max-width: 80%;
-                        display: flex;
-                        align-items: center;
-                        font-style: italic;
-                        color: #666;
-                        font-size: 14px;
-                    `;
+                // Wait for DOM to be fully loaded
+                document.addEventListener('DOMContentLoaded', function() {
+                    console.log('DOM loaded, initializing chatbot...');
                     
-                    typingDiv.innerHTML = `
-                        <span style="margin-right: 10px;">Bot is typing</span>
-                        <div style="display: flex; gap: 3px; align-items: center;">
-                            <span class="typing-dot"></span>
-                            <span class="typing-dot"></span>
-                            <span class="typing-dot"></span>
-                        </div>
-                    `;
+                    // Toggle the chatbot popup
+                    var chatbotButton = document.getElementById('chatbot-button');
+                    var chatbotPopup = document.getElementById('chatbot-popup');
+                    var chatbotInput = document.getElementById('chatbot-input');
+                    var chatbotMessages = document.getElementById('chatbot-messages');
                     
-                    messages.appendChild(typingDiv);
-                    messages.scrollTop = messages.scrollHeight;
-                    return typingDiv;
-                }
-
-                // Function to remove typing indicator
-                function hideTypingIndicator() {
-                    var typingIndicator = document.getElementById('typing-indicator');
-                    if (typingIndicator) {
-                        typingIndicator.remove();
+                    // Debug: Check if elements exist
+                    console.log('Chatbot elements found:', {
+                        button: !!chatbotButton,
+                        popup: !!chatbotPopup,
+                        input: !!chatbotInput,
+                        messages: !!chatbotMessages
+                    });
+                    
+                    if (chatbotButton && chatbotPopup) {
+                        chatbotButton.addEventListener('click', function () {
+                            console.log('Chatbot button clicked');
+                            chatbotPopup.style.display = chatbotPopup.style.display === 'none' ? 'block' : 'none';
+                        });
                     }
-                }
 
-                // Function to create message with timestamp
-                function createMessage(text, isUser = false) {
-                    var messageContainer = document.createElement('div');
-                    messageContainer.style.cssText = `
-                        margin: 10px 0;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: ${isUser ? 'flex-end' : 'flex-start'};
-                    `;
+                    // Function to format time
+                    function formatTime() {
+                        const now = new Date();
+                        return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    }
 
-                    var message = document.createElement('div');
-                    message.textContent = text;
-                    message.style.cssText = `
-                        padding: 10px 15px;
-                        background-color: ${isUser ? '#007bff' : '#f8f9fa'};
-                        color: ${isUser ? 'white' : '#333'};
-                        border-radius: ${isUser ? '20px 20px 5px 20px' : '20px 20px 20px 5px'};
-                        max-width: 80%;
-                        word-wrap: break-word;
-                        ${!isUser ? 'border: 1px solid #007bff;' : ''}
-                    `;
-
-                    var timestamp = document.createElement('div');
-                    timestamp.textContent = formatTime();
-                    timestamp.style.cssText = `
-                        font-size: 0.7rem;
-                        color: #999;
-                        margin-top: 2px;
-                        margin-${isUser ? 'right' : 'left'}: 10px;
-                    `;
-
-                    messageContainer.appendChild(message);
-                    messageContainer.appendChild(timestamp);
-                    
-                    return messageContainer;
-                }
-
-                // Handle chatbot input
-                document.getElementById('chatbot-input').addEventListener('keypress', function (event) {
-                    if (event.key === 'Enter') {
-                        var input = document.getElementById('chatbot-input');
+                    // Function to create typing indicator
+                    function showTypingIndicator() {
+                        console.log('Showing typing indicator...');
                         var messages = document.getElementById('chatbot-messages');
-
-                        if (input.value.trim() !== '') {
-                            var userMessageText = input.value.trim();
-                            
-                            // Add user message with timestamp
-                            var userMessage = createMessage(userMessageText, true);
-                            messages.appendChild(userMessage);
-
-                            // Clear input field
-                            input.value = '';
-
-                            // Scroll to bottom
-                            messages.scrollTop = messages.scrollHeight;
-
-                            // Show typing indicator
-                            var typingIndicator = showTypingIndicator();
-
-                            // Send message to Azure OpenAI service
-                            fetch('/Chat/SendMessage', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ message: userMessageText })
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                hideTypingIndicator();
-                                
-                                // Display bot response
-                                var botMessage = createMessage(data.response || 'Sorry, I could not process your request.', false);
-                                messages.appendChild(botMessage);
-
-                                // Scroll to bottom
-                                messages.scrollTop = messages.scrollHeight;
-                            })
-                            .catch(error => {
-                                hideTypingIndicator();
-                                
-                                // Display error message
-                                var errorMessage = createMessage('Sorry, I\'m experiencing technical difficulties. Please try again later.', false);
-                                messages.appendChild(errorMessage);
-                                
-                                // Scroll to bottom
-                                messages.scrollTop = messages.scrollHeight;
-                            });
+                        if (!messages) {
+                            console.error('Messages container not found!');
+                            return null;
                         }
+                        
+                        var typingDiv = document.createElement('div');
+                        typingDiv.id = 'typing-indicator';
+                        typingDiv.style.cssText = `
+                            padding: 10px 15px;
+                            margin: 5px 0;
+                            background-color: #f8f9fa;
+                            border: 1px solid #007bff;
+                            border-radius: 20px 20px 20px 5px;
+                            max-width: 80%;
+                            display: flex;
+                            align-items: center;
+                            font-style: italic;
+                            color: #666;
+                            font-size: 14px;
+                        `;
+                        
+                        typingDiv.innerHTML = `
+                            <span style="margin-right: 10px;">Bot is typing</span>
+                            <div style="display: flex; gap: 3px; align-items: center;">
+                                <span class="typing-dot"></span>
+                                <span class="typing-dot"></span>
+                                <span class="typing-dot"></span>
+                            </div>
+                        `;
+                        
+                        messages.appendChild(typingDiv);
+                        messages.scrollTop = messages.scrollHeight;
+                        console.log('Typing indicator added to DOM');
+                        return typingDiv;
+                    }
+
+                    // Function to remove typing indicator
+                    function hideTypingIndicator() {
+                        console.log('Hiding typing indicator...');
+                        var typingIndicator = document.getElementById('typing-indicator');
+                        if (typingIndicator) {
+                            typingIndicator.remove();
+                            console.log('Typing indicator removed');
+                        } else {
+                            console.log('No typing indicator found to remove');
+                        }
+                    }
+
+                    // Function to create message with timestamp
+                    function createMessage(text, isUser = false) {
+                        var messageContainer = document.createElement('div');
+                        messageContainer.style.cssText = `
+                            margin: 10px 0;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: ${isUser ? 'flex-end' : 'flex-start'};
+                        `;
+
+                        var message = document.createElement('div');
+                        message.textContent = text;
+                        message.style.cssText = `
+                            padding: 10px 15px;
+                            background-color: ${isUser ? '#007bff' : '#f8f9fa'};
+                            color: ${isUser ? 'white' : '#333'};
+                            border-radius: ${isUser ? '20px 20px 5px 20px' : '20px 20px 20px 5px'};
+                            max-width: 80%;
+                            word-wrap: break-word;
+                            ${!isUser ? 'border: 1px solid #007bff;' : ''}
+                        `;
+
+                        var timestamp = document.createElement('div');
+                        timestamp.textContent = formatTime();
+                        timestamp.style.cssText = `
+                            font-size: 0.7rem;
+                            color: #999;
+                            margin-top: 2px;
+                            margin-${isUser ? 'right' : 'left'}: 10px;
+                        `;
+
+                        messageContainer.appendChild(message);
+                        messageContainer.appendChild(timestamp);
+                        
+                        return messageContainer;
+                    }
+
+                    // Handle chatbot input
+                    if (chatbotInput) {
+                        chatbotInput.addEventListener('keypress', function (event) {
+                            if (event.key === 'Enter') {
+                                console.log('Enter pressed, processing message...');
+                                var input = document.getElementById('chatbot-input');
+                                var messages = document.getElementById('chatbot-messages');
+
+                                if (input.value.trim() !== '') {
+                                    var userMessageText = input.value.trim();
+                                    console.log('User message:', userMessageText);
+                                    
+                                    // Add user message with timestamp
+                                    var userMessage = createMessage(userMessageText, true);
+                                    messages.appendChild(userMessage);
+
+                                    // Clear input field
+                                    input.value = '';
+
+                                    // Scroll to bottom
+                                    messages.scrollTop = messages.scrollHeight;
+
+                                    // Show typing indicator
+                                    console.log('About to show typing indicator...');
+                                    var typingIndicator = showTypingIndicator();
+
+                                    // Send message to Azure OpenAI service
+                                    fetch('/Chat/SendMessage', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ message: userMessageText })
+                                    })
+                                    .then(response => {
+                                        console.log('Response received, hiding typing indicator...');
+                                        return response.json();
+                                    })
+                                    .then(data => {
+                                        hideTypingIndicator();
+                                        
+                                        // Display bot response
+                                        var botMessage = createMessage(data.response || 'Sorry, I could not process your request.', false);
+                                        messages.appendChild(botMessage);
+
+                                        // Scroll to bottom
+                                        messages.scrollTop = messages.scrollHeight;
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                        hideTypingIndicator();
+                                        
+                                        // Display error message
+                                        var errorMessage = createMessage('Sorry, I\'m experiencing technical difficulties. Please try again later.', false);
+                                        messages.appendChild(errorMessage);
+                                        
+                                        // Scroll to bottom
+                                        messages.scrollTop = messages.scrollHeight;
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        console.error('Chatbot input element not found!');
                     }
                 });
             </script>
